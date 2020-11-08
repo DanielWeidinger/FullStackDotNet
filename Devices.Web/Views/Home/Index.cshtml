@@ -1,0 +1,82 @@
+﻿@model Devices.Web.ViewModels.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Usages for devices";
+}
+
+<h1>Overview Usages</h1>
+<div align="right">
+    <a asp-controller="Usages" asp-action="Create" class="btn btn-dark">
+        Create New Usage
+    </a>
+</div>
+
+<form method="post" asp-controller="Home" asp-action="Index">
+    <div class="form-group">
+        Device:
+        <select asp-for="SelectedDeviceId" asp-items="Model.DeviceSelectedList" class="form-control" onchange="this.form.submit()"></select>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceUsages.First().Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceUsages.First().Device.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceUsages.First().Device.DeviceType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceUsages.First().From)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceUsages.First().To)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceUsages.First().Person.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceUsages.First().Person.FirstName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usage in Model.DeviceUsages)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => usage.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => usage.Device.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => usage.Device.DeviceType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => usage.From)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => usage.To)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => usage.Person.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => usage.Person.FullName)
+                </td>
+
+
+                <td>
+                    <a asp-controller="Usages" asp-action="Edit" asp-route-id="@usage.Id">Edit</a> |
+                    <a asp-controller="Usages" asp-action="Details" asp-route-id="@usage.Id">Details</a> |
+                    <a asp-controller="Usages" asp-action="Delete" asp-route-id="@usage.Id">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</form>
